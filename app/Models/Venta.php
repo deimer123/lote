@@ -13,8 +13,8 @@ class Venta extends Model
 
     protected $fillable = [  
                            
-        'User_id',            
-        'Lote_id',       
+        'user_id',            
+        'lote_id',       
         'cuotas',
         'certificate_image',
         'original_filename',

@@ -39,7 +39,7 @@ class VentaResource extends Resource
     {
         return $form
             ->schema([
-                Select::make('User_id')
+                Select::make('user_id')
                 ->reactive()
                 ->label('Datos Del Cliente')
                 ->searchable()
@@ -61,7 +61,7 @@ class VentaResource extends Resource
                        
     
                
-    Select::make('Lote_id')
+    Select::make('lote_id')
                 ->reactive()
                 ->label('Datos Del lote')
                 ->searchable()
@@ -137,8 +137,8 @@ class VentaResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('User.name'),
-                TextColumn::make('Lote.numero_lote'),
+                TextColumn::make('user.name'),
+                TextColumn::make('lote.numero_lote'),
             ])
             ->filters([
                 //
