@@ -39,94 +39,118 @@ class VentaResource extends Resource
     {
         return $form
             ->schema([
-                Select::make('user_id')
-                ->reactive()
-                ->label('Datos Del Cliente')
-                ->searchable()
-                ->getSearchResultsUsing(function($search){
-                       $clientes=[];
-                         $results=User::where('cedula', 'like', "%{$search}%")                        
-                         ->whereHas('roles', function ($query) {
-                            $query->where('name', 'cliente');
-                        })
-                         ->limit(50)
-                         ->get();
-                                    foreach($results as $result){
-                                        $clientes[$result->id]=' Cedula => '.$result->cedula.' Nombre=> '.$result->name;
-                                    }
-                        return $clientes;
-                })
-                ->getOptionLabelUsing(fn ($value): ?string => ' Cedula => '.User::find($value)?->cedula.' Nombre=> '.User::find($value)?->name)
-                ->placeholder('Digite La Cedula Del Cliente'),
-                       
-    
-               
-    Select::make('lote_id')
-                ->reactive()
-                ->label('Datos Del lote')
-                ->searchable()
-                ->getSearchResultsUsing(function($search){
-                        $lotes=[];
-                        $results=Lote::where('numero_lote', 'like', "%{$search}%")->limit(50)->get();
-                        foreach($results as $result){
-                            $lotes[$result->id]=
-                            ' Numero => '.$result->numero_lote.
-                            ' Dirección=> '.$result->direccion_lote.
-                            ' Valor=> '.$result->valor_lote;
-                        }
-                        return $lotes;
+                Card::make()
+                ->schema([
+                    Select::make('user_id')
+                    ->reactive()
+                    ->label('Datos Del Cliente')
+                    ->searchable()
+                    ->getSearchResultsUsing(function($search){
+                           $clientes=[];
+                             $results=User::where('cedula', 'like', "%{$search}%")                        
+                             ->whereHas('roles', function ($query) {
+                                $query->where('name', 'cliente');
+                            })
+                             ->limit(50)
+                             ->get();
+                                        foreach($results as $result){
+                                            $clientes[$result->id]=' Cedula => '.$result->cedula.' Nombre=> '.$result->name;
+                                        }
+                            return $clientes;
                     })
-                ->getOptionLabelUsing(fn ($value): ?string => 
-                ' Numero => '.Lote::find($value)?->numero_lote.
-                ' Dirección=> '.Lote::find($value)?->direccion_lote.
-                ' Valor=> '.Lote::find($value)?->valor_lote)
-                ->unique(ignoreRecord: true)
-                ->placeholder('Digite El Numero Del Lote'),  
+                    ->getOptionLabelUsing(fn ($value): ?string => ' Cedula => '.User::find($value)?->cedula.' Nombre=> '.User::find($value)?->name)
+                    ->placeholder('Digite La Cedula Del Cliente'),
+                           
+        
+                   
+        Select::make('lote_id')
+                    ->reactive()
+                    ->label('Datos Del lote')
+                    ->searchable()
+                    ->getSearchResultsUsing(function($search){
+                            $lotes=[];
+                            $results=Lote::where('numero_lote', 'like', "%{$search}%")->limit(50)->get();
+                            foreach($results as $result){
+                                $lotes[$result->id]=
+                                ' Numero => '.$result->numero_lote.
+                                ' Dirección=> '.$result->direccion_lote.
+                                ' Valor=> '.$result->valor_lote;
+                            }
+                            return $lotes;
+                        })
+                    ->getOptionLabelUsing(fn ($value): ?string => 
+                    ' Numero => '.Lote::find($value)?->numero_lote.
+                    ' Dirección=> '.Lote::find($value)?->direccion_lote.
+                    ' Valor=> '.Lote::find($value)?->valor_lote)
+                    ->unique(ignoreRecord: true)
+                    ->placeholder('Digite El Numero Del Lote'),  
+                    ])->columns(2),
 
-    
-
-    FileUpload::make('certificate_image')
+                
+                    Card::make()
+                    ->schema([
+                       FileUpload::make('certificate_image')
                 ->image()
-                ->label('Ubicacion Lote')
+                ->label('Ubicacion Del Lote')
                 ->required()
                 ->enableDownload()
                 ->enableOpen()
                 ->directory(directory:'lote-images')
-                ->storeFileNamesIn(statePath:'original_filename'),
-    TextInput::make('cuotas') 
+                ->storeFileNamesIn(statePath:'original_filename')
+                ->placeholder('Ubicacion Del Lote'),
+                    ])   ,                
+    
+                    Card::make()
+                    ->schema([
+                        TextInput::make('cuotas') 
                 ->label('Numero De Cuotas')
-                ->required(),   
-    TextInput::make('valor_cuota') 
-                ->label('Valor De Cuota')
-                ->required(),
-    TextInput::make('valor_pagado') 
-                ->label('Valor Pagado')
-                ->required(), 
-    TextInput::make('valor_deuda') 
-                ->label('Valor Deuda')
-                ->required(),  
-                
-                
-    Select::make('agente_id')
-                ->reactive()
                 ->required()
-                ->label('Datos Del Agente')
-                ->searchable()
-                ->getSearchResultsUsing(function($search){
-                       $clientes=[];
-                         $results=User::where('name', 'like', "%{$search}%")                        
-                         ->whereHas('roles', function ($query) {
-                            $query->where('name', 'Agente');
+                ->placeholder('Numero De Cuotas A Pagar'),  
+    TextInput::make('valor_cuota') 
+                ->label('Valor De Cada Cuota')
+                ->required()
+                ->placeholder('Valor De Cada Cuota'),
+                    ])
+                    ->columns(2),
+    
+                    Card::make()
+                    ->schema([
+                        TextInput::make('valor_pagado') 
+                ->label('Valor Pagado Hasta La Fecha')
+                ->required()
+                ->placeholder('Valor Pagado Hasta La Fecha'),
+    TextInput::make('valor_deuda') 
+                ->label('Valor Adeudado Hasta La Fecha')
+                ->required()
+                ->placeholder('Valor Adeudado Hasta La Fecha'),
+                    ])
+                    ->columns(2),
+    
+                    Card::make()
+                    ->schema([
+                        Select::make('agente_id')
+                        ->reactive()
+                        ->required()
+                        ->label('Datos Del Agente')
+                        ->searchable()
+                        ->getSearchResultsUsing(function($search){
+                               $clientes=[];
+                                 $results=User::where('name', 'like', "%{$search}%")                        
+                                 ->whereHas('roles', function ($query) {
+                                    $query->where('name', 'Agente');
+                                })
+                                 ->limit(50)
+                                 ->get();
+                                            foreach($results as $result){
+                                                $clientes[$result->id]=' Telefono => '.$result->cedula.' Nombre=> '.$result->name;
+                                            }
+                                return $clientes;
                         })
-                         ->limit(50)
-                         ->get();
-                                    foreach($results as $result){
-                                        $clientes[$result->id]=' Telefono => '.$result->cedula.' Nombre=> '.$result->name;
-                                    }
-                        return $clientes;
-                })
-                ->getOptionLabelUsing(fn ($value): ?string => ' Telefono => '.User::find($value)?->telefono.' Nombre=> '.User::find($value)?->name)
-                ->placeholder('Digite El Nombre Del Agente'),            
+                        ->getOptionLabelUsing(fn ($value): ?string => ' Telefono => '.User::find($value)?->telefono.' Nombre=> '.User::find($value)?->name)
+                        ->placeholder('Digite El Nombre Del Agente'),            
+            
+                    ])            
+                
     
 
                        
@@ -137,8 +161,8 @@ class VentaResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('user.name'),
-                TextColumn::make('lote.numero_lote'),
+                TextColumn::make('user.name')->label('Nombre Cliente'),
+                TextColumn::make('lote.numero_lote')->label('Numero Lote'),
             ])
             ->filters([
                 //

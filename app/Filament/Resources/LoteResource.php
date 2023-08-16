@@ -12,31 +12,51 @@ use Filament\Resources\Table;
 use Filament\Tables;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Forms\Components\Card;
 
 class LoteResource extends Resource
 {
     protected static ?string $model = Lote::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-collection';
+    protected static ?string $navigationLabel = 'Lotes Ebenezer';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('numero_lote')
-                                                                        ->label('Numero Lote')
-                                                                        ->required()
-                                                                        ->maxLength(50)
-                                                                        ->unique(ignoreRecord: true),
-                Forms\Components\TextInput::make('valor_lote')
-                                                                        ->label('Valor Lote')
-                                                                        ->required()
-                                                                        ->maxLength(50),
+
+                Card::make()
+    ->schema([
+        Forms\Components\TextInput::make('numero_lote')
+        ->label('Numero Lote')
+        ->required()
+        ->maxLength(50)
+        ->unique(ignoreRecord: true)
+        ->placeholder('Digite Un Numero De Lote'),
+    ]),
+                
+
+                                                                        Card::make()
+    ->schema([
+        Forms\Components\TextInput::make('valor_lote')
+        ->label('Valor Lote')
+        ->required()
+        ->maxLength(50)
+        ->placeholder('Digite El Valor Del Lote'),
+    ]),
+                
+
+                                                                        Card::make()
+                                                                        ->schema([
+                                                                            Forms\Components\TextInput::make('direccion_lote')
+                                                                            ->label('Direccion Lote')
+                                                                            ->required()
+                                                                            ->maxLength(50)
+                                                                            ->placeholder('Digite La Direccion Del Lote'),
+                                                                        ])
                                                                         
-                Forms\Components\TextInput::make('direccion_lote')
-                                                                        ->label('Direccion Lote')
-                                                                        ->required()
-                                                                        ->maxLength(50),
+                
 
             ]);
     }
