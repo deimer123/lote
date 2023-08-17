@@ -22,8 +22,9 @@ class UserResource extends Resource
 {
     protected static ?string $model = User::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-collection';
+    protected static ?string $navigationIcon = 'heroicon-o-user';
     protected static ?string $navigationLabel = 'Clientes Ebenezer';
+    protected static ?string $navigationGroup = '<-CLIENTES-> ';
 
 
     public static function form(Form $form): Form
@@ -91,7 +92,7 @@ class UserResource extends Resource
                                 if (! auth()->User()->hasRole('super_admin'))  {
                                 
                                 
-                                    return $query->where('name', '<>', 'super_admin')->where('name', '<>', 'auxiliar');
+                                    return $query->where('name', '<>', 'super_admin')->where('name', '<>', 'auxiliar')->where('name', '<>', 'agente');
                                     
                                 }
             
@@ -132,7 +133,7 @@ class UserResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('name')->sortable()->label('Nombre'),
                 Tables\Columns\TextColumn::make('email'),
-                Tables\Columns\TextColumn::make('Roles.name')->label('Tpo Cliente'),
+                Tables\Columns\TextColumn::make('Roles.name')->label('Tipo Cliente'),
             ])
             ->filters([
                 //

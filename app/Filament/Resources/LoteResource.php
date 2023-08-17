@@ -18,8 +18,9 @@ class LoteResource extends Resource
 {
     protected static ?string $model = Lote::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-collection';
+    protected static ?string $navigationIcon = 'heroicon-o-academic-cap';
     protected static ?string $navigationLabel = 'Lotes Ebenezer';
+    protected static ?string $navigationGroup = '<-LOTES-> ';
 
     public static function form(Form $form): Form
     {

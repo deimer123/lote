@@ -33,7 +33,9 @@ class VentaResource extends Resource
 {
     protected static ?string $model = Venta::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-collection';
+    protected static ?string $navigationIcon = 'heroicon-o-presentation-chart-line';
+    protected static ?string $navigationLabel = 'Ventas Ebenezer';
+    protected static ?string $navigationGroup = '<-VENTAS-> ';
 
     public static function form(Form $form): Form
     {
