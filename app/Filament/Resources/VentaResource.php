@@ -56,11 +56,11 @@ class VentaResource extends Resource
                              ->limit(50)
                              ->get();
                                         foreach($results as $result){
-                                            $clientes[$result->id]=' Cedula => '.$result->cedula.' Nombre=> '.$result->name;
+                                            $clientes[$result->id]=' 🆔 '.$result->cedula.' ✏️  '.$result->name;
                                         }
                             return $clientes;
                     })
-                    ->getOptionLabelUsing(fn ($value): ?string => ' Cedula => '.User::find($value)?->cedula.' Nombre=> '.User::find($value)?->name)
+                    ->getOptionLabelUsing(fn ($value): ?string => ' 🆔 '.User::find($value)?->cedula.' ✏️  '.User::find($value)?->name)
                     ->placeholder('Digite La Cedula Del Cliente'),
                            
         
@@ -74,16 +74,16 @@ class VentaResource extends Resource
                             $results=Lote::where('numero_lote', 'like', "%{$search}%")->limit(50)->get();
                             foreach($results as $result){
                                 $lotes[$result->id]=
-                                ' Numero => '.$result->numero_lote.
-                                ' Dirección=> '.$result->direccion_lote.
-                                ' Valor=> '.$result->valor_lote;
+                                ' 🧱 '.$result->numero_lote.
+                                ' 🏠 '.$result->direccion_lote.
+                                ' 💲 '.$result->valor_lote;
                             }
                             return $lotes;
                         })
                     ->getOptionLabelUsing(fn ($value): ?string => 
-                    ' Numero => '.Lote::find($value)?->numero_lote.
-                    ' Dirección=> '.Lote::find($value)?->direccion_lote.
-                    ' Valor=> '.Lote::find($value)?->valor_lote)
+                    ' 🧱 '.Lote::find($value)?->numero_lote.
+                    ' 🏠 '.Lote::find($value)?->direccion_lote.
+                    ' 💲 '.Lote::find($value)?->valor_lote)
                     ->unique(ignoreRecord: true)
                     ->placeholder('Digite El Numero Del Lote'),  
                     ])->columns(2),
@@ -144,11 +144,11 @@ class VentaResource extends Resource
                                  ->limit(50)
                                  ->get();
                                             foreach($results as $result){
-                                                $clientes[$result->id]=' Telefono => '.$result->cedula.' Nombre=> '.$result->name;
+                                                $clientes[$result->id]='  👨‍💼  '.$result->name.' 📞 '.$result->telefono;
                                             }
                                 return $clientes;
                         })
-                        ->getOptionLabelUsing(fn ($value): ?string => ' Telefono => '.User::find($value)?->telefono.' Nombre=> '.User::find($value)?->name)
+                        ->getOptionLabelUsing(fn ($value): ?string => '  👨‍💼  '.User::find($value)?->name.' 📞 '.User::find($value)?->telefono)
                         ->placeholder('Digite El Nombre Del Agente'),            
             
                     ])            
