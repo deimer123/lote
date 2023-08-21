@@ -33,4 +33,12 @@ class UserCount extends BaseWidget
             ->color('success'),
         ];
     }
+
+    public static function canView(): bool
+    {
+        return auth()->user()->hasRole('super_admin');
+    }
+
+
+
 }
